@@ -12,6 +12,7 @@
 # include <netdb.h>
 #else
 # include <windows.h>
+#include <Ws2tcpip.h>
 # include <winsock2.h>
 #endif
 

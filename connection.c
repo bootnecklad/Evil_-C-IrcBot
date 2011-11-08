@@ -2,9 +2,10 @@
 
 SOCKET connection_init(const char* server, const char* port)
 {
-    SOCKET_STARTUP();
     struct addrinfo hints, *p, *servinfo;
-    int rv;
+	int rv;
+	
+    SOCKET_STARTUP();
     SOCKET sockfd;
 
     memset(&hints, 0, sizeof(hints));
