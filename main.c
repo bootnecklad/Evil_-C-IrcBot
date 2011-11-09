@@ -43,6 +43,7 @@ void my_message_received(irc_t* irc, user_t* user, message_t* message)
 		else if(strcmp(command, "grab") == 0)
 		    irc_send(irc, "PRIVMSG %S :Grabbed quote!\r\n", message->channel, arguments);
 		    irc_send(irc, "PRIVMSG %S :%S\r\n", message->channel, arguments);
+			//This will be the first 'function' of qdbot I add.
     }
 }
 
