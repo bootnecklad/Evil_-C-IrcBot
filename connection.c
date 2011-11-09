@@ -1,12 +1,33 @@
 #include "connection.h"
 
+#ifdef _WIN32
+	void socketStartup()
+	{
+		WSADATA wsaData;
+		WSAStartup(MAKEWORD(2, 0), &wsaData);
+	}
+	void socketCleanup()
+	{
+		WSACleanup();
+	}
+#else
+	void socketStartup()
+	{
+		//not implemented
+	}
+	void socketCleanup()
+	{
+		//not implemented
+	}
+#endif
+
 SOCKET connection_init(const char* server, const char* port)
 {
     struct addrinfo hints, *p, *servinfo;
 	int rv;
 	
-    SOCKET_STARTUP();
-    SOCKET sockfd;
+	socketStartup();
+	SOCKET sockfd = -1;
 
     memset(&hints, 0, sizeof(hints));
 
@@ -57,7 +78,7 @@ int connection_recv(SOCKET sockfd, char* buffer, int max_length)
 int connection_close(SOCKET sockfd)
 {
     int x = close(sockfd);
-    SOCKET_CLEANUP();
+    socketCleanup();
 
     return x;
 }

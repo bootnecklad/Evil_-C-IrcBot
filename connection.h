@@ -12,33 +12,12 @@
 # include <netdb.h>
 #else
 # include <windows.h>
-#include <Ws2tcpip.h>
+# include <Ws2tcpip.h>
 # include <winsock2.h>
 #endif
 
 #ifndef _WIN32
 typedef int SOCKET;
-#endif
-
-#ifdef _WIN32
-void socketStartup()
-{
-    WSADATA wsaData;
-	WSAStartup(MAKEWORD(2, 0), &wsaData);
-}
-void socketCleanup()
-{
-	WSACleanup();
-}
-#else
-void socketStartup()
-{
-	//not implemented
-}
-void socketCleanup()
-{
-	//not implemented
-}
 #endif
 
 SOCKET connection_init(const char* server, const char* port);

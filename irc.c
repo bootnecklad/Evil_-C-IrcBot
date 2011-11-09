@@ -120,7 +120,7 @@ void irc_main_loop(irc_t* irc, const char* nick)
             user->nick = strtok(user_info, "!");
             user->user = strtok(NULL, "@");
             user->host = strtok(NULL, "\0");
-    printf("Parsed user\n");
+            printf("Parsed user\n");
 
             if(!list_isempty(privmsg_list))
             {
