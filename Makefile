@@ -8,6 +8,7 @@ CFLAGS = -O2 -Wall
 OBJ = connection.o irc.o list.o main.o
 
 qdbot : $(OBJ)
+	$(CC) -o $@ $^
 
 clean :
 	rm -f qdbot $(OBJ)
