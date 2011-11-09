@@ -4,13 +4,12 @@
 
 
 CFLAGS = -O2
-LDFLAGS=-laaa -lbbb
+LDFLAGS= -lWinsock2.h -lWs2tcpip.h
 
 OBJ = connection.o irc.o list.o main.o
 
 qdbot : $(OBJ)
-	$(CC) -o $@ $^
-	$(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean :
 	rm -f qdbot $(OBJ)
