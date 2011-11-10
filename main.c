@@ -53,10 +53,10 @@ int main()
     signal(SIGINT, handle_signal);
     signal(SIGABRT, handle_signal);
 
-    irc_init(&irc, "irc.strictfp.com", "6667");
+    irc_init(&irc, "irc.moparisthebest.com", "6667");
 
     irc_register(&irc, "PRIVMSG", my_message_received);
-    irc_send(&irc, "JOIN #stl\r\n");
+    irc_send(&irc, "JOIN #mopar\r\n");
     irc_main_loop(&irc, "qdbot");
     irc_cleanup(&irc);
 

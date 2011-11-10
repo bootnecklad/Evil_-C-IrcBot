@@ -48,7 +48,7 @@ SOCKET connection_init(const char* server, const char* port)
 
         if(connect(sockfd, p->ai_addr, p->ai_addrlen) == -1)
         {
-            close(sockfd);
+            closesocket(sockfd);
             continue;
         }
 
@@ -77,7 +77,7 @@ int connection_recv(SOCKET sockfd, char* buffer, int max_length)
 
 int connection_close(SOCKET sockfd)
 {
-    int x = close(sockfd);
+    int x = closesocket(sockfd);
     socketCleanup();
 
     return x;

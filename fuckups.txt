@@ -1,0 +1,10 @@
+func          header         lib           dll
+WSAStartup    WS2tcpip.h     Ws2_32.lib    Ws2_32.dll
+getaddrinfo   WS2tcpip.h     Ws2_32.lib    Ws2_32.dll
+Socket        Winsock2.h     Ws2_32.lib    Ws2_32.dll
+Connect       Winsock2.h     Ws2_32.lib    Ws2_32.dll
+freeaddrinfo  Ws2tcpip.h                   Ws2_32.dll
+closesocket   Winsock2.h     Ws2_32.lib    Ws2_32.dll
+send          Winsock2.h     Ws2_32.lib    Ws2_32.dll
+recv          Winsock2.h     Ws2_32.lib    Ws2_32.dll
+WSACleanup    Winsock2.h     Ws2_32.lib    Ws2_32.dll
