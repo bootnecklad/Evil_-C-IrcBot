@@ -48,7 +48,11 @@ SOCKET connection_init(const char* server, const char* port)
 
         if(connect(sockfd, p->ai_addr, p->ai_addrlen) == -1)
         {
+#ifdef _WIN32
             closesocket(sockfd);
+#else
+            close(sockfd);
+#endif
             continue;
         }
 
@@ -77,7 +81,11 @@ int connection_recv(SOCKET sockfd, char* buffer, int max_length)
 
 int connection_close(SOCKET sockfd)
 {
+#ifdef _WIN32
     int x = closesocket(sockfd);
+#else
+    int x = close(sockfd);
+#endif
     socketCleanup();
 
     return x;
