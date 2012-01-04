@@ -41,23 +41,26 @@ void my_message_received(irc_t* irc, user_t* user, message_t* message)
             irc_send(irc, "PART %s\r\n", arguments);
         }
 		else if(strcmp(command, "grab") == 0)
+        {
 		    irc_send(irc, "PRIVMSG %S :Grabbed quote!\r\n", message->channel, arguments);
 		    irc_send(irc, "PRIVMSG %S :%S\r\n", message->channel, arguments);
 			//This will be the first 'function' of qdbot I add.
+        }
     }
 }
 
 int main()
 {
-    signal(SIGTERM, handle_signal);
-    signal(SIGINT, handle_signal);
-    signal(SIGABRT, handle_signal);
+    // weird bug on SIGTERM, disabled for now
+    //signal(SIGTERM, handle_signal);
+    //signal(SIGINT, handle_signal);
+    //signal(SIGABRT, handle_signal);
 
-    irc_init(&irc, "irc.moparisthebest.com", "6667");
+    irc_init(&irc, "irc.moparisthebest.com", "6667", "qdbot");
 
     irc_register(&irc, "PRIVMSG", my_message_received);
     irc_send(&irc, "JOIN #mopar\r\n");
-    irc_main_loop(&irc, "qdbot");
+    irc_main_loop(&irc);
     irc_cleanup(&irc);
 
     return 0;
