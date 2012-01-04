@@ -32,11 +32,11 @@ typedef void (*fn_message_received)(irc_t* irc, user_t* user, message_t* message
 struct list* privmsg_list;
 struct list* notice_list;
 
-void irc_init(irc_t* irc, const char* server, const char* port);
+void irc_init(irc_t* irc, const char* server, const char* port, const char* nick);
 void irc_send(irc_t* irc, const char* format, ...);
 int  irc_read_line(irc_t* irc, char* buffer, int max_length);
 void irc_register(irc_t* irc, const char* command, void* received);
-void irc_main_loop(irc_t* irc, const char* nick);
+void irc_main_loop(irc_t* irc);
 void irc_cleanup(irc_t* irc);
 
 #endif // __IRC_H__

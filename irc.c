@@ -1,6 +1,6 @@
 #include "irc.h"
 
-void irc_init(irc_t* irc, const char* server, const char* port)
+void irc_init(irc_t* irc, const char* server, const char* port, const char* nick)
 {
     privmsg_list = list_create();
     notice_list = list_create();
@@ -8,6 +8,8 @@ void irc_init(irc_t* irc, const char* server, const char* port)
     irc->server = strdup(server);
     irc->port = strdup(port);
     irc->sockfd = connection_init(server, port);
+    irc_send(irc, "NICK %s\r\n", nick);
+    irc_send(irc, "USER %s * * :C IrcBot programmed by Nicholas Bailey, modified by bootnecklad\r\n", nick);
 }
 
 void irc_send(irc_t* irc, const char* format, ...)
@@ -61,11 +63,9 @@ int irc_read_line(irc_t* irc, char* buffer, int max_length)
     return idx + offset;
 }
 
-void irc_main_loop(irc_t* irc, const char* nick)
+void irc_main_loop(irc_t* irc)
 {
     char buffer[512];
-    irc_send(irc, "NICK %s\r\n", nick);
-    irc_send(irc, "USER %s * * :C IrcBot programmed by Nicholas Bailey, modified by bootnecklad\r\n", nick);
 
     while(irc_read_line(irc, buffer, 512) > 0)
     {
@@ -106,36 +106,36 @@ void irc_main_loop(irc_t* irc, const char* nick)
 
         if(strcmp("PRIVMSG", command) == 0)
         {
-            printf("K, it was PRIVMSG\n");
+            //printf("K, it was PRIVMSG\n");
             message_t* message = malloc(sizeof(message_t));
-            printf("Mallocing\n");
+            //printf("Mallocing\n");
             user_t* user = malloc(sizeof(user_t));
-            printf("Getting USER\n");
+            //printf("Getting USER\n");
 
             message->channel = strtok(arguments, " ");
             message->message = strtok(NULL, "\0");
             message->message++;
-            printf("Parsed Message\n");
+            //printf("Parsed Message\n");
 
             user->nick = strtok(user_info, "!");
             user->user = strtok(NULL, "@");
             user->host = strtok(NULL, "\0");
-            printf("Parsed user\n");
+            //printf("Parsed user\n");
 
             if(!list_isempty(privmsg_list))
             {
-                printf("list isn't empty\n");
+                //printf("list isn't empty\n");
                 struct node* cur = NULL;
 
-                printf("Calling funcs.\n");
+                //printf("Calling funcs.\n");
                 for(cur = privmsg_list->start;
                     cur != NULL;
                     cur = cur->next)
                 {
-                    printf("Calling function!\n");
+                    //printf("Calling function!\n");
                     if(cur->data != NULL)
-                    ((fn_message_received) cur->data)(irc, user, message);
-                    printf("Called\n");
+                        ((fn_message_received) cur->data)(irc, user, message);
+                    //printf("Called\n");
                 }
             }
 
